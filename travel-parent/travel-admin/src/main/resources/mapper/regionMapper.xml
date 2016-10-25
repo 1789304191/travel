@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.WhyRegionMapper">
+    
+	<select id="regionList" parameterType="Map"  resultType="com.xinding.travel.pojo.WHYRegion">
+		select * from t_why_region
+		<where>
+		    status=2
+		    <if test="name != null and name!='' ">
+		    	and name like CONCAT('%','${name}','%' )
+			</if>
+		</where> 
+		order by sort asc
+	</select>
+	
+	<insert id="add" parameterType="com.xinding.travel.pojo.WHYRegion">
+	    insert into t_why_region (name,sort,status,
+	    createUserId,createDatetime,lastUpdatedUserId,lastUpdatedDatetime)
+	    values (#{name},#{sort},#{status},#{createUserId},
+	    #{createDatetime},#{lastUpdatedUserId},#{lastUpdatedDatetime})
+	</insert>
+	
+	<update id="update" parameterType="com.xinding.travel.pojo.WHYRegion">
+		update 	t_why_region 
+		<set>
+			<if test="status != null ">
+		    	status=#{status},
+			</if>
+			<if test="name != null and name != '' ">
+		    	name=#{name},
+			</if>
+			<if test="sort != null  ">
+		    	sort=#{sort},
+			</if> 
+			<if test="lastUpdatedUserId != null  ">
+		    	lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+			<if test="lastUpdatedDatetime != null  ">
+		    	lastUpdatedDatetime=#{lastUpdatedDatetime}
+			</if> 
+		</set>
+		where id=#{id}    
+	</update>
+	
+</mapper>

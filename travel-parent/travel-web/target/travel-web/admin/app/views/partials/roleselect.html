@@ -1,0 +1,42 @@
+<form class="form-horizontal">
+    <div class="input-group" style="right:20px;margin-bottom: 10px;width: 40%;float: right">
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="search.condition"
+               ng-change="searchChange()">
+               <span class="input-group-btn">
+                  <button class="btn btn-info" type="button" ng-click="search()">搜索</button>
+               </span>
+    </div>
+    <div class="input-group" style="margin-bottom: 10px;width: 30%;float: left">
+               <select   name="account_customer" class="form-control" >
+                  		<option  value="1">已录入</option>
+                  		<option  value="0">未录入</option>
+                  </select>
+    </div>
+    <table class="table table-hover table-striped table-bordered  table-angular">
+        <thead>
+        <tr>
+            <th class="active" ng-click="tableSort('one')">id</th>
+            <th class="active" ng-click="tableSort('two')">角色名称</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in dataTable.data">
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.name"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.description"></td>
+        </tr>
+        </tbody>
+    </table>
+   	<p>显示第 {{currentPageStart()}} 条至 {{currentPageEnd()}} 条</p>
+    <div class="text-right">
+        <uib-pagination  total-items="dataTable.totalLength" ng-model="dataTable.currentPage" max-size="5" class="pagination"
+                        boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-8">
+            <button  class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">cancel</button>
+            <button  class="btn btn-success btn-lg" ng-click="confirm(userAdmin)">Sign in</button>
+        </div>
+    </div>
+</form>

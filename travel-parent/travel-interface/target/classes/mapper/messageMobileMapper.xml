@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.MessageMobileMapper">
+	
+	<insert id="save" parameterType="com.xinding.travel.pojo.MessageMobile">
+		insert into t_why_message
+		(
+		mobilePhone,
+		sendCode,
+		msg,
+		token,
+		status,
+		createTime,
+		projectCode
+		) 
+		values(
+		#{mobilePhone},
+		#{sendCode},
+		#{msg},
+		#{token},
+		#{status},
+		#{createTime},
+		#{projectCode}
+		)
+	</insert>
+	
+	<select id="list" parameterType="Map" resultType="com.xinding.travel.pojo.MessageMobile">
+	    select * from t_why_message 
+		 <where>
+			   <if test="mobilePhone != null and mobilePhone != '' ">
+			    	<![CDATA[and mobilePhone =#{mobilePhone}]]>
+			   </if>
+			   <if test="sendCode != null and sendCode != '' ">
+			    	<![CDATA[and sendCode =#{sendCode}]]>
+			   </if>
+			   <if test="projectCode != null and projectCode != '' ">
+			    	<![CDATA[and projectCode =#{projectCode}]]>
+			   </if>
+		  </where>
+		    order by id desc limit 1
+	    
+	    
+	</select>
+	
+	<select id="listByToken" parameterType="Map" resultType="com.xinding.travel.pojo.MessageMobile">
+	    select * from t_why_message 
+		 <where>
+			   <if test="mobilePhone != null and mobilePhone != '' ">
+			    	<![CDATA[and mobilePhone =#{mobilePhone}]]>
+			   </if>
+			   <if test="token != null and token != '' ">
+			    	<![CDATA[and token =#{token}]]>
+			   </if>
+			   <if test="projectCode != null and projectCode != '' ">
+			    	<![CDATA[and projectCode =#{projectCode}]]>
+			   </if>
+		  </where>
+	</select>
+	
+	
+</mapper>

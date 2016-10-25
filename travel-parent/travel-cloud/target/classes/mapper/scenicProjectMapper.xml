@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinding.travel.mapper.ScenicProjectMapper">
+	<select id="scenicProjectList" parameterType="Map" resultType="com.xinding.travel.pojo.ScenicProject">
+		 select a.* from t_why_scenic_project a
+		 <where>
+		    <if test="createUserId != null ">
+				 and a.createUserId=#{createUserId}
+		 	</if>
+		 	<if test="customerId != null ">
+				 and a.customerId=#{customerId}
+		 	</if>
+		 	<if test="name != null and name !='' ">
+				 and a.name like CONCAT('%',#{name},'%' )
+		 	</if>
+		 	<if test="startDatetime != null and startDatetime !='' ">
+				 and a.startDatetime&gt;=#{startDatetime}
+		 	</if>
+		 	<if test="endDatetime != null and endDatetime !='' ">
+				 and a.endDatetime&lt;=#{endDatetime}
+		 	</if>
+		 	<choose>
+   				<when test="status != null">
+   					and status=#{status}
+   				</when>
+  				<otherwise>
+  					and status!=0
+  				</otherwise>
+  			</choose>
+	  	</where>
+	  	order by createDatetime desc
+	</select>
+	
+	<insert id="add" parameterType="Map">
+		insert into t_why_scenic_project
+		(
+		name,
+		firstPic,
+		description,
+		startDatetime,
+		endDatetime,
+		price,
+		customerId,
+		status,
+		createUserId,
+		createDatetime,
+		lastUpdatedUserId,
+		lastUpdatedDatetime,
+		salesNum
+		) 
+		values(
+		#{name},
+		#{firstPic},
+		#{description},
+		#{startDatetime},
+		#{endDatetime},
+		#{price},
+		#{customerId},
+		#{status},
+		#{createUserId},
+		#{createDatetime},
+		#{lastUpdatedUserId},
+		#{lastUpdatedDatetime},
+		#{salesNum}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.xinding.travel.pojo.ScenicProject">
+		update t_why_scenic_project  
+		<set>
+			<if test="status != null ">
+		    	status=#{status},
+			</if>
+			<if test="name != null and name != '' ">
+		    	name=#{name},
+			</if>
+			<if test="description != null and description != ''  ">
+		    	description=#{description},
+			</if> 
+			<if test="firstPic != null and firstPic != ''  ">
+		    	firstPic=#{firstPic},
+			</if> 
+			<if test="startDatetime != null and startDatetime != ''  ">
+		    	startDatetime=#{startDatetime},
+			</if> 
+			<if test="endDatetime != null and endDatetime != ''  ">
+		    	endDatetime=#{endDatetime},
+			</if>
+			<if test="price != null ">
+		    	price=#{price},
+			</if> 
+			<if test="lastUpdatedUserId != null  ">
+		    	lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+			<if test="lastUpdatedDatetime != null  ">
+		    	lastUpdatedDatetime=#{lastUpdatedDatetime}
+			</if> 
+		</set>
+		where id = #{id}
+  	</update>
+  	
+	<update id="delete" parameterType="com.xinding.travel.pojo.ScenicProject" >
+		update t_why_scenic_project set status = #{status}  where id = #{id}
+  	</update>
+	
+	<select id="scenicProjectListAll" parameterType="Map"  resultType="com.xinding.travel.pojo.ScenicProject">
+	    select s.id, s.`name` from t_why_scenic_project s where s.`status` = '1'
+	</select>
+	
+	<select id="projectPDAuserBind" parameterType="java.lang.Long" resultType="java.lang.Long">
+	    select so.scenicId from t_pda_scenic_order so
+		LEFT JOIN t_why_event e ON so.scenicId = e.id
+		LEFT JOIN t_pda_user u ON so.pdaUserId = u.id
+		where so.pdaUserId = #{pdaUserId}
+	</select>
+	
+	
+</mapper>

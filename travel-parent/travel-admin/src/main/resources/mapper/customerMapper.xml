@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.CustomerMapper">
+	<select id="selectCustomer"  resultType="com.xinding.travel.pojo.WHYCustomer">
+		select * from t_why_customer 
+		<where>
+		    status=2
+		   <if test="code != null and code != ''  ">
+		    	and code=#{code}
+		   </if>
+		   <if test="id != null   ">
+		    	and id!=#{id}
+		   </if>
+	  	</where>
+		order by id
+	</select>
+	
+	<select id="customerList"  resultType="com.xinding.travel.pojo.WHYCustomer">
+		SELECT
+			a.*,
+			a1.NAME regionName
+		FROM t_why_customer a
+		LEFT OUTER JOIN t_why_region a1 ON a.regionId = a1.id where a.status=2
+		ORDER BY id 
+	</select>
+	
+	<select id="findCustomerNameList" resultType="Map">
+	    SELECT c.id as customerId, c.name 
+		FROM t_why_customer c 
+		<where>
+		    C.status = '2'
+		</where> 
+	</select>
+	
+	<update id="update" parameterType="com.xinding.travel.pojo.WHYCustomer" >
+	   update 	t_why_customer 
+		<set>
+			<if test="status != null ">
+		    	status=#{status},
+			</if>
+			<if test="regionId != null ">
+		    	regionId=#{regionId},
+			</if>
+			<if test="name != null and name != '' ">
+		    	name=#{name},
+			</if>
+			<if test="code != null and code != '' ">
+		    	code=#{code},
+			</if> 
+			<if test="lastUpdatedUserId != null  ">
+		    	lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+			<if test="lastUpdatedDatetime != null  ">
+		    	lastUpdatedDatetime=#{lastUpdatedDatetime}
+			</if> 
+		</set>
+		where id=#{id}    
+	</update>
+	
+	<insert id="add" parameterType="com.xinding.travel.pojo.WHYCustomer">
+	    insert into t_why_customer (name,code,status,regionId,
+	    createUserId,createDatetime,lastUpdatedUserId,lastUpdatedDatetime)
+	    values (#{name},#{code},#{status},#{regionId},#{createUserId},
+	    #{createDatetime},#{lastUpdatedUserId},#{lastUpdatedDatetime})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,40 @@
+<div ng-controller="customer-add-Ctrl" >
+	<form name="customerForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label for="customerName" class="col-sm-3 control-label">客户名称</label>
+			<div class="col-sm-8">
+				<input id="customerName" type="text" name="customerName" ng-model="customer.customerName"
+					class="form-control"  required> <span
+					ng-show="customerForm.customerName.$dirty && customerForm.customerName.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="customerCode" class="col-sm-3 control-label">客户编码</label>
+			<div class="col-sm-8">
+				<input id="customerCode" type="text" name="customerCode" ng-model="customer.customerCode"
+					class="form-control"  required> <span
+					ng-show="customerForm.customerCode.$dirty && customerForm.customerCode.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="regionId" class="col-sm-3 control-label">地区</label>
+			<div class="col-sm-8">
+				<select name="regionId" ng-model="region.regionId" required=""
+					ng-options="key as value for (key, value) in regions"
+					class="form-control">
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-8">
+				<button class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+				<button type="submit" class="btn btn-success btn-lg"
+					ng-click="confirm(userAdmin)">提交</button>
+			</div>
+		</div>
+		
+		
+	</form>
+</div>

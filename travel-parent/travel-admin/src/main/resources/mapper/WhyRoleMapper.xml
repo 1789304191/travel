@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.WhyRoleMapper">
+	<select id="roleList" parameterType="java.util.Map" resultType="com.xinding.travel.pojo.WhyRole">
+		select * from t_why_role 
+		<where>
+		    status=2
+		   <if test="ids != null ">
+		    	and id in
+		    	 <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+ 				 #{item}
+ 				 </foreach>  
+		   </if>
+		   <if test="name != null and name != '' ">
+		    	and name=#{name}
+		   </if>
+		   <if test="id != null  ">
+		    	and id!=#{id}
+		   </if>
+	  	</where>
+	</select>
+	
+	<select id="findRoleList" resultType="Map">
+	    select r.id as roleId, r.name from t_why_role r where r.status = '2'
+	</select>
+	
+	<update id="setPrivilege" parameterType="java.util.Map">
+    	update t_why_role set privilegeCodes=#{codes} where id=#{id}
+	</update> 
+	
+	<insert id="addRole" parameterType="com.xinding.travel.pojo.WhyRole">
+	    insert into t_why_role (name,description,status,
+	    createUserId,createDatetime,lastUpdatedUserId,lastUpdatedDatetime)
+	    values (#{name},#{description},#{status},#{createUserId},
+	    #{createDatetime},#{lastUpdatedUserId},#{lastUpdatedDatetime})
+	</insert>
+	
+	<update id="updateRole" parameterType="com.xinding.travel.pojo.WhyRole">
+		update 	t_why_role 
+		<set>
+			<if test="status != null ">
+		    	status=#{status},
+			</if>
+			<if test="name != null and name != '' ">
+		    	name=#{name},
+			</if>
+			<if test="description != null and description != '' ">
+		    	description=#{description},
+			</if> 
+			<if test="lastUpdatedUserId != null  ">
+		    	lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+			<if test="lastUpdatedDatetime != null  ">
+		    	lastUpdatedDatetime=#{lastUpdatedDatetime}
+			</if> 
+		</set>
+		where id=#{id}    
+	</update>
+	
+	<select id="findRoleById"  parameterType="java.util.Map" resultType="com.xinding.travel.pojo.WhyRole" >
+	    select * from t_why_role 
+	    <where>
+		    status=2
+		   <if test="id != null  ">
+		    	and id=#{id}
+		   </if>
+	  	</where>
+	</select>
+	
+</mapper>

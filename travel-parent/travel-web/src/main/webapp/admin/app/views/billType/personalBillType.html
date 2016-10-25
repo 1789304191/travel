@@ -1,0 +1,55 @@
+<div class="portlet-body">
+	<div class="input-group"
+		style="margin-bottom: 10px; width: 40%; float: right">
+		<input type="text" class="form-control"
+			placeholder="请输入企业名称" ng-model="query.key"
+			ng-change="searchChange()"> <span class="input-group-btn">
+			<button class="btn btn-info search-btn" type="button"
+				ng-click="searchFuc()">搜索</button>
+	</div>
+	<div class="input-group"
+		style="margin-bottom: 10px; width: 40%; float: left">
+		<span class="input-group-btn">
+			<button class="btn btn-info" type="button" ng-click="add()">新增</button>
+		</span>
+	</div>
+	<div class="input-group"
+		style="margin-bottom: 10px; width: 30%; float: left"></div>
+	<div class="table table-responsive table-angular">
+		<table class="table table-hover table-bordered table-odd">
+			<thead>
+				<tr>
+					<th class="active">序号</th>
+					<th class="active" ng-click="tableSort('one')">ID</th>
+					<th class="active" ng-click="tableSort('one')">企业名称</th>
+					<th class="active" ng-click="tableSort('Name')">金额</th>
+					<th>修改</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="project in dataTable.data">
+				    <td>{{serialNumber($index+1)}}</td>
+				    <td>{{project.id}}</td>
+					<td>{{project.compay}}</td>
+					<td>￥{{project.amount}}</td>
+					<td>
+						<button type="button" class="btn btn-info btn-sm "
+							ng-click="tableEdit($index)">修改</button>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary btn-sm "
+							ng-click="tableDelete(project.id)">删除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<p>第 <span style="color:#FF0000">{{currentPageStart()}}</span> 条至 <span style="color:#FF0000">{{currentPageEnd()}}</span> 条
+		|总共：<span style="color:#FF0000">{{totalNum()}}</span> 条
+	<div class="text-right">
+		<uib-pagination total-items="dataTable.totalLength"
+			ng-model="dataTable.currentPage" max-size="5" class="pagination"
+			boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+	</div>
+</div>

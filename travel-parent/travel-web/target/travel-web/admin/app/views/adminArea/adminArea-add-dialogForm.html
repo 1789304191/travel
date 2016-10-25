@@ -1,0 +1,30 @@
+<div ng-controller="adminArea-add-Ctrl" >
+	<form name="adminAreaForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label for="areaName" class="col-sm-3 control-label">区域名称</label>
+			<div class="col-sm-8">
+				<input id="areaName" type="text" name="areaName" ng-model="adminArea.areaName"
+					class="form-control"  required> <span
+					ng-show="adminAreaForm.areaName.$dirty && adminAreaForm.areaName.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sort" class="col-sm-3 control-label">排序</label>
+			<div class="col-sm-8">
+			<input id="sort"  type="number" name="sort" ng-model="adminArea.sort" class="form-control" required/>
+				 <span ng-show="adminAreaForm.sort.$dirty && adminAreaForm.sort.$error.required" class="text-danger">必填项</span> 
+                 <span ng-show="adminAreaForm.sort.$error.number" class="text-danger">必须是数字</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-8">
+				<button class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+				<button type="submit" class="btn btn-success btn-lg"
+					ng-click="confirm(userAdmin)">提交</button>
+			</div>
+		</div>
+		
+		
+	</form>
+</div>

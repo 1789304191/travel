@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.BillTypeMapper">
+
+	<select id="compayBillTypeList" parameterType="Map"
+		resultType="com.xinding.travel.pojo.CompayBillType">
+		select * from t_why_companybill_type where status = 1
+		<if test="key != null and key != '' ">
+			    <![CDATA[and (compay like CONCAT('%',#{key},'%' )
+			    or companyTax  like CONCAT('%',#{key},'%' ))
+			    ]]>
+		</if>
+		<if test="customerId != null and customerId != '' ">
+		    <![CDATA[and customerId = #{customerId}]]>
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+		    <![CDATA[and createUserId = #{createUserId}]]>
+		</if>
+		order by id desc
+	</select>
+	
+	<select id="compayBillTypeListByTax" parameterType="Map"
+		resultType="com.xinding.travel.pojo.CompayBillType">
+		select * from t_why_companybill_type where status = 1
+		<if test="companyTax != null and companyTax != '' ">
+		    <![CDATA[and companyTax = #{companyTax}]]>
+		</if>
+	</select>
+
+	<insert id="addCompayBill" parameterType="com.xinding.travel.pojo.CompayBillType">
+		insert into
+		t_why_companybill_type
+		(
+		compay,
+		companyTax,
+		content,
+		amount,
+		customerId,
+		createUserId,
+		status
+		)
+		values(
+		#{compay},
+		#{companyTax},
+		#{content},
+		#{amount},
+		#{customerId},
+		#{createUserId},
+		#{status}
+		)
+	</insert>
+
+	<update id="updateCompayBill" parameterType="com.xinding.travel.pojo.CompayBillType">
+		update t_why_companybill_type
+		<set>
+			<if test="compay != null ">
+				compay=#{compay},
+			</if>
+			<if test="companyTax != null and companyTax != '' ">
+				companyTax=#{companyTax},
+			</if>
+			<if test="content != null and content != ''  ">
+				content=#{content},
+			</if>
+			<if test="amount != null and amount != ''  ">
+				amount=#{amount},
+			</if>
+			<if test="lastUpdatedDatetime != null and lastUpdatedDatetime != ''  ">
+				lastUpdatedDatetime=#{lastUpdatedDatetime},
+			</if>
+			<if test="lastUpdatedUserId != null and lastUpdatedUserId != ''  ">
+				lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="deleteCompayBill" parameterType="com.xinding.travel.pojo.CompayBillType">
+		update
+		t_why_companybill_type set status = #{status} where id = #{id}
+	</update>
+
+
+	<select id="personalBillTypeList" parameterType="Map"
+		resultType="com.xinding.travel.pojo.PersonalBillType">
+		select * from t_why_personalbill_type where status = 1
+		<if test="key != null and key != '' ">
+			    <![CDATA[and (compay like CONCAT('%',#{key},'%' ))
+			    ]]>
+		</if>
+		<if test="customerId != null and customerId != '' ">
+		    <![CDATA[and customerId = #{customerId}]]>
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+		    <![CDATA[and createUserId = #{createUserId}]]>
+		</if>
+		order by id desc
+	</select>
+
+	<insert id="addPersonalBill" parameterType="com.xinding.travel.pojo.PersonalBillType">
+		insert into
+		t_why_personalbill_type
+		(
+		compay,
+		amount,
+		customerId,
+		createUserId,
+		status
+		)
+		values(
+		#{compay},
+		#{amount},
+		#{customerId},
+		#{createUserId},
+		#{status}
+		)
+	</insert>
+
+	<update id="updatePersonalBill" parameterType="com.xinding.travel.pojo.PersonalBillType">
+		update t_why_personalbill_type
+		<set>
+			<if test="compay != null ">
+				compay=#{compay},
+			</if>
+			<if test="amount != null and amount != ''  ">
+				amount=#{amount},
+			</if>
+			<if test="lastUpdatedDatetime != null and lastUpdatedDatetime != ''  ">
+				lastUpdatedDatetime=#{lastUpdatedDatetime},
+			</if>
+			<if test="lastUpdatedUserId != null and lastUpdatedUserId != ''  ">
+				lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="deletePersonalBill" parameterType="com.xinding.travel.pojo.PersonalBillType">
+		update
+		t_why_personalbill_type set status = #{status} where id = #{id}
+	</update>
+
+
+</mapper>

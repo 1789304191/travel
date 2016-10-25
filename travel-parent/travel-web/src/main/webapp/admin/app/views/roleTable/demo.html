@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - checkbox</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../admin/app/zTree_v3/css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../admin/app/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../admin/app/zTree_v3/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../admin/app/zTree_v3/js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../admin/app/zTree_v3/js/jquery.ztree.excheck.js"></script>
+	<SCRIPT type="text/javascript">
+	var setting = {
+			view: {
+				selectedMulti: false
+			},
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onCheck: onCheck
+			}
+		};
+		
+		var zNodes=[];
+	
+		var submitData={
+	                id:role.id,
+	                code:role.privilegeCodes
+	            };
+		var stamp=new Date().getTime();
+		$.ajax({  
+	        url : '../privilege/privilegeGrid?timestamp='+stamp,  
+	        async : false, // 注意此处需要同步，因为返回完数据后，下面才能让结果的第一条selected  
+	        type : "POST",  
+	        dataType : "json", 
+	        data:submitData,
+	        success : function(result) {  
+	        	zNodes=result;
+	        }  
+	    });  
+		/* $.post('../privilege/privilegeGrid',submitData,function(data){
+			console.log(data);
+        	zNodes=data
+  		}); */
+		/* var zNodes =[
+			{ id:1, pId:0, name:"随意勾选 1"},
+			{ id:11, pId:1, name:"随意勾选 1-1"},
+			{ id:12, pId:1, name:"随意勾选  1-2"},
+			//{ id:121, pId:12, name:"随意勾选 1-2-1"},
+			//{ id:122, pId:12, name:"随意勾选 1-2-2"},
+			//{ id:123, pId:12, name:"随意勾选 1-2-3"},
+			{ id:13, pId:1, name:"随意勾选 1-3"},
+			{ id:2, pId:0, name:"随意勾选 2"},
+			{ id:21, pId:2, name:"随意勾选 2-1"},
+			{ id:22, pId:2, name:"随意勾选 2-2"},
+			//{ id:221, pId:22, name:"随意勾选 2-2-1"},
+			//{ id:222, pId:22, name:"随意勾选 2-2-2"},
+			//{ id:223, pId:22, name:"随意勾选 2-2-3"},
+			{ id:23, pId:2, name:"随意勾选 2-3"}
+		]; */
+		//console.log(zNodes)
+		var clearFlag = false;
+		function onCheck(e, treeId, treeNode) {
+			count();
+			if (clearFlag) {
+				clearCheckedOldNodes();
+			}
+		}
+		function clearCheckedOldNodes() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			nodes = zTree.getChangeCheckedNodes();
+			for (var i=0, l=nodes.length; i<l; i++) {
+				nodes[i].checkedOld = nodes[i].checked;
+			}
+		}
+		function count() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			checkCount = zTree.getCheckedNodes(true).length,
+			nocheckCount = zTree.getCheckedNodes(false).length,
+			changeCount = zTree.getChangeCheckedNodes().length;
+			$("#checkCount").text(checkCount);
+			$("#nocheckCount").text(nocheckCount);
+			$("#changeCount").text(changeCount);
+			//console.log(zTree.getCheckedNodes(true));
+			selectNodes=zTree.getCheckedNodes(true);
+			
+		}
+		function createTree() {
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			count();
+			clearFlag = $("#last").attr("checked");
+		}
+
+		$(document).ready(function(){
+			createTree();			
+			$("#init").bind("change", createTree);
+			$("#last").bind("change", createTree);
+		});
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>权限分配</h1>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground" style="position: relative;left:100px;top:-15px">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="form-group">
+        <div class="col-sm-offset-3 col-sm-8" style="position: relative;left:-25px;bottom: 10px">
+            <button  class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+            <button  class="btn btn-success btn-lg" ng-click="confirm()" >确定</button>
+        </div>
+    </div>
+	<!-- <div class="right">
+		<ul class="info">
+			<li  class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 checkbox，必须设置 setting.check 中的各个属性，详细请参见 API 文档中的相关内容</li>
+				<li><p>父子关联关系：<br/>
+						被勾选时：<input type="checkbox" id="py" class="checkbox first" checked /><span>关联父</span>
+						<input type="checkbox" id="sy" class="checkbox first" checked /><span>关联子</span><br/>
+						取消勾选时：<input type="checkbox" id="pn" class="checkbox first" checked /><span>关联父</span>
+						<input type="checkbox" id="sn" class="checkbox first" checked /><span>关联子</span><br/>
+						<ul id="code" class="log" style="height:20px;"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">1)、如果需要初始化默认节点被勾选，请设置 treeNode.checked 属性，详细请参见 API 文档中的相关内容</li>
+				<li class="highlight_red">2)、如果某节点禁用 checkbox，请设置 treeNode.chkDisabled 属性，详细请参见 API 文档中的相关内容 和 'chkDisabled 演示'</li>
+				<li class="highlight_red">3)、如果某节点不显示 checkbox，请设置 treeNode.nocheck 属性，详细请参见 API 文档中的相关内容 和 'nocheck 演示'</li>
+				<li class="highlight_red">4)、如果更换 checked 属性，请参考 API 文档中 setting.data.key.checked 的详细说明</li>
+				<li>5)、其他请参考 API 文档中 treeNode.checkedOld / getCheckStatus / check_Child_State / check_Focus 的详细说明</li>
+				</ul>
+			</li>
+		</ul>
+	</div> -->
+</div>
+</BODY>
+</HTML>

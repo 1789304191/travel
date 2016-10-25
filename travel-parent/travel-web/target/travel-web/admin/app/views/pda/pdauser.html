@@ -1,0 +1,91 @@
+<div class="portlet-body">
+	<div class="input-group"
+		style="margin-bottom: 10px; width: 40%; float: right">
+	</div>
+	<div id="isSuperior" class="superior-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>账户名称</label>
+					<div class="controls">
+						<input type="text" ng-model="query.account" class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>真实姓名</label>
+					<div class="controls">
+						<input type="text" ng-model="query.name" class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>员工工号</label>
+					<div class="controls">
+						<input type="text" ng-model="query.employeeNo" class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+				</div>
+				<div class="form-group superior-commit">
+						<button class="btn btn-info superior-btn" type="button"
+							ng-click="superiorSearch()">高级搜索</button>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+    <div class="input-group" style="margin-bottom: 10px;width: 40%;float: left">
+               <span class="input-group-btn">
+                  <button class="btn btn-info" type="button" ng-click="add()">新增</button>
+                  <button class="btn btn-info superior-btn" type="button"
+						superior-dire="isSuperior">高级搜索</button>
+               </span>
+    </div>
+    <table class="table table-hover table-striped table-bordered  table-angular">
+        <thead>
+        <tr>
+            <th class="active" ng-click="tableSort('one')">ID</th>
+            <th class="active" ng-click="tableSort('two')">账户名称</th>
+            <th class="active" ng-click="tableSort('three')">真实姓名</th>
+            <th class="active" ng-click="tableSort('three')">员工工号</th>
+            <th class="active" ng-click="tableSort('City')">创建时间</th>
+            <th class="active" ng-click="tableSort('County')">状态</th>
+            <th>绑定活动</th>
+            <th>修改</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in dataTable.data">
+            <td>{{project.id}}</td>
+            <td>{{project.account}}</td>
+            <td>{{project.name}}</td>
+            <td>{{project.employeeNo}}</td>
+            <td>{{project.createDatetimeStr}}</td>
+            <td>{{project.status}}</td>
+            <td>
+            	<button type="button" class="btn btn-info btn-sm "
+                        ng-click="tableBind($index)">绑定活动
+                </button>
+            </td>
+            <td>
+                <button  type="button" class="btn btn-info btn-sm "
+                        ng-click="tableEdit($index)">修改
+                </button>
+
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm " ng-click="tableDelete(project.id)">删除
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p>显示第 {{currentPageStart()}} 条至 {{currentPageEnd()}} 条</p>
+    <div class="text-right">
+        <uib-pagination  total-items="dataTable.totalLength" ng-model="dataTable.currentPage" max-size="5" class="pagination"
+                        boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+    </div>
+</div>

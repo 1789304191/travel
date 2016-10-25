@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.PDADeviceMapper">
+	<select id="PDADeviceList" parameterType="Map" resultType="com.xinding.travel.pojo.PDADevice">
+		select * from t_pda_device u where u.`status` = '2'
+	</select>
+	
+	<insert id="add" parameterType="com.xinding.travel.pojo.PDADevice">
+		insert into t_pda_device 
+			   (deviceNo, 
+			    status,
+			    createDatetime, 
+			    lastUpdatedDatetime)
+	    values (#{deviceNo},
+	            #{status},
+	            #{createDatetime},
+	            #{lastUpdatedDatetime})		    
+	</insert>
+	
+	<update id="delete">
+	    update t_pda_device u set u.status = #{0} 
+	    where u.id = #{id}
+	</update>
+	
+	<update id="update" parameterType="com.xinding.travel.pojo.PDADevice">
+	    update t_pda_device d set d.deviceNo=#{deviceNo} 
+	    where d.id = #{id}
+	</update>
+	<!-- <select id="findCustomerUser" resultType="com.xinding.travel.pojo.CustomerUser">
+		select * 
+		from t_why_customer_user cu 
+		where cu.customerId = #{0} and cu.account  = #{1} and cu.status = 2
+	</select>
+	
+	
+	
+	<update id="updateCustomerUser" parameterType="com.xinding.travel.pojo.CustomerUser">
+	    update t_why_customer_user u set u.account=#{account}, 
+	                                     u.name=#{name}, 
+	                                     u.tel=#{tel},
+	                                     u.email=#{email},
+	                                     u.customerId=#{customerId},
+	                                     u.status=#{status},
+	                                     u.createUserId=#{createUserId},
+	                                     u.createDatetime=#{createDatetime},
+	                                     u.lastUpdatedUserId=#{lastUpdatedUserId},
+	                                     u.lastUpdatedDatetime=#{lastUpdatedDatetime}
+	    where u.id = #{id}
+	</update>
+	
+	<select id="findCustomerUserById" parameterType="java.lang.Long" resultType="com.xinding.travel.pojo.CustomerUser">
+	    select * from t_why_customer_user u where u.id = #{id}
+	</select> -->
+</mapper>

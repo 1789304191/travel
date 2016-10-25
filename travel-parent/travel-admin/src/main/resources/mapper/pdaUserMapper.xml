@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.PDAUserMapper">
+	<select id="PDAUserList" parameterType="Map" resultType="com.xinding.travel.pojo.PDAUser">
+		select * from t_pda_user u where u.`status` = '2'
+		<if test="account != null and account != '' ">
+		    <![CDATA[and u.account like CONCAT('%',#{account},'%' )]]>
+		</if>
+		<if test="name != null and name != '' ">
+		    <![CDATA[and u.name like CONCAT('%',#{name},'%' )]]>
+		</if>
+		<if test="employeeNo != null and employeeNo != '' ">
+		    <![CDATA[and u.employeeNo like CONCAT('%',#{employeeNo},'%' )]]>
+		</if>
+	</select>
+	
+	<insert id="add" parameterType="com.xinding.travel.pojo.PDAUser">
+		insert into t_pda_user 
+			   (account, 
+			    password, 
+			    status, 
+			    createUserId, 
+			    createDatetime,
+			    lastUpdatedUserId, 
+			    lastUpdatedDatetime, 
+			    firstPic, 
+			    name)
+	    values (#{account},
+	            #{password},
+	            #{status},
+	            #{createUserId},
+	            #{createDatetime},
+	            #{lastUpdatedUserId},
+	            #{lastUpdatedDatetime},
+	            #{firstPic},
+	            #{name}
+	            )		    
+	</insert>
+	
+	<select id="findByAccount" parameterType="java.lang.String" resultType="com.xinding.travel.pojo.PDAUser">
+	    select * from t_pda_user u where u.account = #{account} and u.status = '2'
+	</select>
+	
+	<update id="addEmployeeNo" parameterType="java.lang.String">
+		update t_pda_user u set u.employeeNo = #{0} where u.account = #{1}	    
+	</update>
+	
+	<update id="delete" parameterType="java.lang.Long">
+	    update t_pda_user u set u.status = '0' where u.id = #{id} 
+	</update>
+	
+	<update id="update" parameterType="com.xinding.travel.pojo.CustomerUser">
+	    update t_pda_user u set u.account=#{account}, 
+	                                     u.name=#{name}, 
+	                                     u.password=#{password},
+	                                     u.status=#{status},
+	                                     u.lastUpdatedUserId=#{lastUpdatedUserId},
+	                                     u.lastUpdatedDatetime=#{lastUpdatedDatetime},
+	                                     u.name=#{name},
+	                                 	 u.firstPic=#{firstPic}
+	    where u.id = #{id}
+	</update>
+	
+	<insert id="bind" parameterType="java.lang.Long">
+		insert into t_pda_scenic_order 
+			   (pdaUserId, 
+			    scenicId)
+	    values (#{1},
+	            #{0})	
+	</insert>
+	
+	<delete id="deleteProjectPDAuserId" >
+		delete FROM t_pda_scenic_order where pdaUserId = #{0}   
+	</delete>
+	
+	<!-- <select id="findCustomerUser" resultType="com.xinding.travel.pojo.CustomerUser">
+		select * 
+		from t_why_customer_user cu 
+		where cu.customerId = #{0} and cu.account  = #{1} and cu.status = 2
+	</select>
+	
+	
+	
+	<update id="updateCustomerUser" parameterType="com.xinding.travel.pojo.CustomerUser">
+	    update t_why_customer_user u set u.account=#{account}, 
+	                                     u.name=#{name}, 
+	                                     u.tel=#{tel},
+	                                     u.email=#{email},
+	                                     u.customerId=#{customerId},
+	                                     u.status=#{status},
+	                                     u.createUserId=#{createUserId},
+	                                     u.createDatetime=#{createDatetime},
+	                                     u.lastUpdatedUserId=#{lastUpdatedUserId},
+	                                     u.lastUpdatedDatetime=#{lastUpdatedDatetime}
+	    where u.id = #{id}
+	</update>
+	
+	<select id="findCustomerUserById" parameterType="java.lang.Long" resultType="com.xinding.travel.pojo.CustomerUser">
+	    select * from t_why_customer_user u where u.id = #{id}
+	</select> -->
+</mapper>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="angle">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <meta name="description" content="{{app.description}}">
+   <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
+   <title data-ng-bind="::pageTitle()">旅游云</title>
+   <!-- Bootstrap styles-->
+   <link rel="stylesheet" href="app/css/bootstrap.css" data-ng-if="!app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/bootstrap-rtl.css" data-ng-if="app.layout.isRTL">
+   <link rel="stylesheet" href="app/vendor/jquery.simple-dtpicker.css">
+   <!-- Application styles-->
+   <link rel="stylesheet" href="app/css/app.css" data-ng-if="!app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/app-rtl.css" data-ng-if="app.layout.isRTL">
+   <link rel="stylesheet" href="app/css/main.css">
+   <!-- Themes-->
+   <link rel="stylesheet" ng-href="{{app.layout.theme}}" data-ng-if="app.layout.theme">
+   <link rel="shortcut icon" type="image/x-icon" href="app/img/lvCloud.png" media="screen" />
+</head>
+
+<body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat, 'offsidebar-open': app.offsidebarOpen, 'aside-toggled': app.asideToggled}">
+   <!-- <div data-preloader></div> -->
+   <div data-ui-view="" data-autoscroll="false" class="wrapper"></div>
+   <script src="app/js/base.js"></script>
+   	 <!-- 上传 -->
+   <script src="app/js/plugs/jquery.ajax_upload.0.6.js"></script>
+     <!-- 文本编辑器 -->
+   <!--日历选择器-->
+   <script src="app/vendor/jquery.simple-dtpicker.js"></script>
+   <!-- zTree -->
+   <script type="text/javascript" src="app/zTree_v3/js/jquery.ztree.core.js"></script>
+   <script type="text/javascript" src="app/zTree_v3/js/jquery.ztree.excheck.js"></script>
+   <!-- 时间控件 -->
+   <script src="app/js/datePicker/WdatePicker.js"></script>
+   <script src="app/js/config/mainconfig.js"></script>
+   <script src="app/js/config/lazyConfig.js"></script>
+   <script src="app/js/config/loadingConfig.js"></script>
+   <script src="app/js/config/coreConfig.js"></script>
+   <script src="app/js/config/settingConfig.js"></script>
+   <script src="app/js/config/translateConfig.js"></script>
+   <script src="app/js/config/localeConfig.js"></script>
+   <script src="app/js/constant/coreCanstant.js"></script>
+   <script src="app/js/constant/lazyloadConstant.js"></script>
+   <script src="app/js/filter/filterDirective.js"></script>
+   <script src="app/js/service/ngTableService.js"></script>
+   <script src="app/js/service/chatService.js"></script>
+   <script src="app/js/service/formService.js"></script>
+   <script src="app/js/service/mailService.js"></script>
+   <script src="app/js/service/mapsService.js"></script>
+   <script src="app/js/service/navsearchService.js"></script>
+   <script src="app/js/service/routesProvider.js"></script>
+   <script src="app/js/service/sideBarService.js"></script>
+   <script src="app/js/service/tableService.js"></script>
+   <script src="app/js/service/utilsService.js"></script>
+   <script src="app/js/directive/chatsDirective.js"></script>
+   <script src="app/js/directive/flatdocDirective.js"></script>
+   <script src="app/js/directive/formDirective.js"></script>
+   <script src="app/js/directive/iconDirective.js"></script>
+   <script src="app/js/directive/mapDirective.js"></script>
+   <script src="app/js/directive/navsearchDirective.js"></script>
+   <script src="app/js/directive/panelDirective.js"></script>
+   <script src="app/js/directive/preloaderDirective.js"></script>
+   <script src="app/js/directive/sideBarDirective.js"></script>
+   <script src="app/js/directive/utilDirective.js"></script>
+   <script src="app/js/controller/userTableCtrl.js"></script>
+   <script src="app/js/controller/roleTableCtrl.js"></script>
+   <script src="app/js/controller/rolePermissionsCtrl.js"></script>
+   <script src="app/js/controller/abnTestCtrl.js"></script>
+   <script src="app/js/controller/angularCtrl.js"></script>
+   <script src="app/js/controller/bootstrapUICtrl.js"></script>
+   <script src="app/js/controller/chatCtrl.js"></script>
+   <script src="app/js/controller/customCtrl.js"></script>
+   <script src="app/js/controller/dataTableController.js"></script>
+   <script src="app/js/controller/dialogCtrl.js"></script>
+   <script src="app/js/controller/extrasCtrl.js"></script>
+   <script src="app/js/controller/formCtrl.js"></script>
+   <script src="app/js/controller/initScrollCtrl.js"></script>
+   <script src="app/js/controller/localeCtrl.js"></script>
+   <script src="app/js/controller/loginCtrl.js"></script>
+   <script src="app/js/controller/mailCtrl.js"></script>
+   <script src="app/js/controller/mainCtrl.js"></script>
+   <script src="app/js/controller/mapCtrl.js"></script>
+   <script src="app/js/controller/masonryCtrl.js"></script>
+   <script src="app/js/controller/nestableCtrl.js"></script>
+   <script src="app/js/controller/ngGridTableController.js"></script>
+   <script src="app/js/controller/notifyCtrl.js"></script>
+   <script src="app/js/controller/panelCtrl.js"></script>
+   <script src="app/js/controller/registerCtrl.js"></script>
+   <script src="app/js/controller/sideBarBlockControll.js"></script>
+   <script src="app/js/controller/sideBarMenuController.js"></script>
+   <script src="app/js/controller/sortableCtrl.js"></script>
+   <script src="app/js/controller/sweetCtrl.js"></script>
+   <script src="app/js/controller/tableController.js"></script>
+   <script src="app/js/controller/tableEditCtrl.js"></script>
+   <script src="app/js/controller/tourCtrl.js"></script>
+   <script src="app/js/controller/UIGridCtrl.js"></script>
+   <script src="app/js/controller/ngTableCtrl.js"></script>
+   <script src="app/js/controller/customerCtrl.js"></script>
+   <script src="app/js/controller/customerUserCtrl.js"></script>
+   <script src="app/js/controller/scenicController/scenicProjectCtrl.js"></script>
+   <script src="app/js/controller/orderController/orderCtrl.js"></script>
+   <script src="app/js/controller/adminArea/adminAreaCtrl.js"></script>
+   <script src="app/js/controller/pda/pdaUserCtrl.js"></script>
+   <script src="app/js/controller/pda/pdaDeviceCtrl.js"></script>
+   <script src="app/js/controller/billType/compayBillTypeCtrl.js"></script>
+   <script src="app/js/controller/billType/personalBillTypeCtrl.js"></script>
+   <script src="app/js/controller/userStatistics/userStatisticsCtrl.js"></script>
+   <script src="app/js/app.js"></script>
+</body>
+
+</html>

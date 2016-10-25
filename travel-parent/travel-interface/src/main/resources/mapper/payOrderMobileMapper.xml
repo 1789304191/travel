@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.PayOrderMobileMapper">
+	<select id="payOrderListByCode" parameterType="String" resultType="com.xinding.travel.pojo.PayOrder">
+		select * from t_why_order where code = #{code}
+	</select>
+	
+	<select id="getPayOrder" parameterType="String" resultType="com.xinding.travel.pojo.PayOrder">
+		select * from t_why_order where orderSn = #{orderSn}
+	</select>
+	<select id="getTopPayOrder" parameterType="String" resultType="com.xinding.travel.pojo.PayOrder">
+		select * from t_why_order where status <![CDATA[<>]]> 0 order by verificateNo desc limit 1
+	</select>
+	<select id="scenicDetail" parameterType="Long" resultType="Map">
+		select * from t_why_scenic_project where status=1 and id = #{id}
+	</select>
+	
+	<select id="msgList" parameterType="Map" resultType="com.xinding.travel.pojo.MessagePay">
+	    select * from t_why_message 
+		 <where>
+			   <if test="phone != null and phone != '' ">
+			    	<![CDATA[and mobilePhone =#{phone}]]>
+			   </if>
+			   <if test="sendCode != null and sendCode != '' ">
+			    	<![CDATA[and sendCode =#{sendCode}]]>
+			   </if>
+			   <if test="projectCode != null and projectCode != '' ">
+			    	<![CDATA[and projectCode =#{projectCode}]]>
+			   </if>
+		  </where>
+		    order by id desc limit 1
+	</select>
+	
+	<insert id="savePayOrder" parameterType="com.xinding.travel.pojo.PayOrder">
+		insert into t_why_order
+		(
+		orderSn,
+		status,
+		openId,
+		scenicProjectId,
+		num,
+		price,
+		orderAmount,
+		payWayId,
+		createTime,
+		mobilePhone,
+		code,
+		customerId,
+		projectCode
+		) 
+		values(
+		#{orderSn},
+		#{status},
+		#{openId},
+		#{scenicProjectId},
+		#{num},
+		#{price},
+		#{orderAmount},
+		#{payWayId},
+		#{createTime},
+		#{mobilePhone},
+		#{code},
+		#{customerId},
+		#{projectCode}
+		)
+	</insert>
+	
+	<update id="updateOrderByOrderSn" parameterType="Map" >
+		update t_why_order set status = 1,
+		qrcodeStr = #{qrcodeStr},
+		qrcodePic = #{qrcodePic},
+		verificateNo = #{verificateNo} 
+		where orderSn = #{orderSn}
+	</update>
+	
+	<update id="updateScenicSalesNum" parameterType="Long" >
+		update t_why_scenic_project set salesNum = salesNum + 1 where id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,33 @@
+<div class="portlet-body">
+    <div class="input-group" style="margin-bottom: 10px;width: 40%;float: right">
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="search.condition"
+               ng-change="searchChange()">
+               <span class="input-group-btn">
+                  <button class="btn btn-info" type="button" ng-click="searchCommit()">搜索</button>
+               </span>
+    </div>
+    <table class="table table-hover table-striped table-bordered  table-angular">
+        <thead>
+        <tr>
+            <th class="active" ng-click="tableSort('two')">设备号</th>
+            <th class="active" ng-click="tableSort('five')">登录时间</th>
+            <th class="active" ng-click="tableSort('four')">上次登录时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in dataTable.data">
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.deviceNo"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.startTimestamp"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.lastLoginTime"></td>
+        </tr>
+        </tbody>
+    </table>
+    <p>显示第 {{currentPageStart()}} 条至 {{currentPageEnd()}} 条</p>
+    <div class="text-right">
+        <uib-pagination  total-items="dataTable.totalLength" ng-model="dataTable.currentPage" max-size="5" class="pagination"
+                        boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+    </div>
+</div>

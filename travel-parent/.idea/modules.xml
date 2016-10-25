@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/travel-admin/travel-admin.iml" filepath="$PROJECT_DIR$/travel-admin/travel-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-base/travel-base.iml" filepath="$PROJECT_DIR$/travel-base/travel-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-cloud/travel-cloud.iml" filepath="$PROJECT_DIR$/travel-cloud/travel-cloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-config/travel-config.iml" filepath="$PROJECT_DIR$/travel-config/travel-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-interface/travel-interface.iml" filepath="$PROJECT_DIR$/travel-interface/travel-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-parent.iml" filepath="$PROJECT_DIR$/travel-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-pay/travel-pay.iml" filepath="$PROJECT_DIR$/travel-pay/travel-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/travel-web/travel-web.iml" filepath="$PROJECT_DIR$/travel-web/travel-web.iml" />
+    </modules>
+  </component>
+</project>

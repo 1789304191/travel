@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.NotifyMapper">
+		<!-- 用户报名 -->
+	<insert id="saveWxNotify" parameterType="Map">
+		insert into t_why_weixin_pay_notify
+		(
+		appid,
+		bank_type,
+		is_subscribe,
+		mch_id,
+		nonce_str,
+		openid,
+		out_trade_no,
+		result_code,
+		return_code,
+		sign,
+		time_end,
+		total_fee,
+		trade_type,
+		transaction_id
+		) 
+		values(
+		#{appid},
+		#{bank_type},
+		#{is_subscribe},
+		#{mch_id},
+		#{nonce_str},
+		#{openid},
+		#{out_trade_no},
+		#{result_code},
+		#{return_code},
+		#{sign},
+		#{time_end},
+		#{total_fee},
+		#{trade_type},
+		#{transaction_id}
+		)
+	</insert>
+		<!-- 用户报名 -->
+	<insert id="saveAliNotify" parameterType="com.xinding.travel.pojo.AlipayNotifyEntity">
+		insert into t_why_alipay_notify
+		(
+		orderSn,
+		notify_time,
+		notify_type,
+		notify_id,
+		sign_type,
+		sign,
+		out_trade_no,
+		subject,
+		payment_type,
+		trade_no,
+		trade_status,
+		gmt_create,
+		gmt_payment,
+		gmt_close,
+		seller_email,
+		buyer_email,
+		seller_id,
+		buyer_id,
+		price,
+		total_fee,
+		quantity,
+		body,
+		discount,
+		is_total_fee_adjust,
+		use_coupon,
+		refund_status,
+		gmt_refund
+		) 
+		values(
+		#{orderSn},
+		#{notify_time},
+		#{notify_type},
+		#{notify_id},
+		#{sign_type},
+		#{sign},
+		#{out_trade_no},
+		#{subject},
+		#{payment_type},
+		#{trade_no},
+		#{trade_status},
+		#{gmt_create},
+		#{gmt_payment},
+		#{gmt_close},
+		#{seller_email},
+		#{buyer_email},
+		#{seller_id},
+		#{buyer_id},
+		#{price},
+		#{total_fee},
+		#{quantity},
+		#{body},
+		#{discount},
+		#{is_total_fee_adjust},
+		#{use_coupon},
+		#{refund_status},
+		#{gmt_refund}
+		)
+	</insert>
+</mapper>

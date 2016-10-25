@@ -1,0 +1,49 @@
+<div ng-controller="compayBillType-update-dialogFormCtrl" >
+	<form name="compayBillTypeForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">企业名称</label>
+			<div class="col-sm-8">
+				<input id="compay" type="text" name="compay" ng-model="compayBillType.compay"
+					class="form-control"  required> <span
+					ng-show="compayBillTypeForm.compay.$dirty && compayBillTypeForm.compay.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">企业税号</label>
+			<div class="col-sm-8">
+				<input id="companyTax" type="text" name="companyTax"  ng-model="compayBillType.companyTax"
+					class="form-control"  required> <span
+					ng-show="compayBillTypeForm.companyTax.$dirty && compayBillTypeForm.companyTax.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="price" class="col-sm-3 control-label">金额</label>
+			<div class="col-sm-8">
+				<input id="amount" type="text" name="amount" ng-pattern="/^[0-9]*\.*[0-9]*$/" ng-model="compayBillType.amount"
+					class="form-control" limit-num='2' required> 
+					<span ng-show="compayBillTypeForm.amount.$dirty && compayBillTypeForm.amount.$error.required" class="text-danger">必填项</span> 
+					<span ng-show="compayBillTypeForm.amount.$error.number" class="text-danger">必须是数字</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="content" class="col-sm-3 control-label">开票内容</label>
+			<div class="col-sm-8">
+				<textarea id="content" name="content" ng-model="compayBillType.content" class="form-control" required></textarea>
+				<span
+					ng-show="compayBillTypeForm.content.$dirty && compayBillTypeForm.content.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-8">
+				<button class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+				<button type="submit" class="btn btn-success btn-lg"
+					ng-click="confirm(model)">提交</button>
+			</div>
+		</div>
+		
+		
+	</form>
+</div>

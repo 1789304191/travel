@@ -1,0 +1,45 @@
+<div ng-controller="rolePermission-add-Ctrl" >
+	<form name="PermissionForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label for="id" class="col-sm-3 control-label">父菜单</label>
+			<div class="col-sm-8">
+				<select name="id" ng-model="permissionForm.id" required=""
+					ng-options="key as value for (key, value) in availableLocales"
+					class="form-control">
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="t" class="col-sm-3 control-label">名称</label>
+			<div class="col-sm-8">
+				<input id="t" type="text" name="text" ng-model="permissionForm.text"
+					class="form-control"  required> <span
+					ng-show="PermissionForm.text.$dirty && PermissionForm.text.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sref" class="col-sm-3 control-label">权限代码</label>
+			<div class="col-sm-8">
+				<input id="sref" type="text" name="sref" ng-model="permissionForm.sref"
+					class="form-control"  required> <span
+					ng-show="PermissionForm.sref.$dirty && PermissionForm.sref.$error.required"
+					class="text-danger">必填项</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="icon" class="col-sm-3 control-label">图标</label>
+			<div class="col-sm-8">
+				<input id="icon" type="text" name="icon" ng-model="permissionForm.icon"
+					class="form-control"  > 
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-8">
+				<button class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+				<button type="submit" class="btn btn-success btn-lg"
+					ng-click="confirm(userAdmin)">提交</button>
+			</div>
+		</div>
+	</form>
+</div>

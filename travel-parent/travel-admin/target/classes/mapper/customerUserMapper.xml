@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.CustomerUserMapper">
+	<select id="customerUserList" parameterType="Map" resultType="com.xinding.travel.pojo.CustomerUser">
+		SELECT
+			a.*,
+			b.roleId
+			FROM
+			t_why_customer_user a
+		LEFT OUTER JOIN t_why_customer_user_role b ON a.id = b.customerUserId 
+		<where>
+		    a.status=2
+		    <if test="name != null and name!='' ">
+		    	and a.name like CONCAT('%','${name}','%' )
+			</if>
+		</where> 
+		ORDER BY a.id
+	</select>
+	
+	<select id="findCustomerUser" resultType="com.xinding.travel.pojo.CustomerUser">
+		select * 
+		from t_why_customer_user cu 
+		where cu.customerId = #{0} and cu.account  = #{1} and cu.status = 2
+	</select>
+	
+	<insert id="AddcustomerUser" parameterType="com.xinding.travel.pojo.CustomerUser">
+		insert into t_why_customer_user 
+			   (account, 
+			    name, 
+			    tel, 
+			    email, 
+			    customerId, 
+			    status,
+			    createUserId, 
+			    createDatetime, 
+			    lastUpdatedUserId, 
+			    lastUpdatedDatetime)
+	    values (#{account},
+	            #{name},
+	            #{tel},
+	            #{email},
+	            #{customerId},
+	            #{status},
+	            #{createUserId},
+	            #{createDatetime},
+	            #{lastUpdatedUserId},
+	            #{lastUpdatedDatetime})		    
+	</insert>
+	
+	<update id="updateCustomerUser" parameterType="com.xinding.travel.pojo.CustomerUser">
+		update 	t_why_customer_user u
+		<set>
+			<if test="account != null and account != ''  ">
+		    	u.account=#{account},
+			</if>
+			<if test="name != null and name != '' ">
+		    	u.name=#{name},
+			</if>
+			<if test="tel != null and tel != '' ">
+		    	u.tel=#{tel},
+			</if>
+			<if test="email != null and email != '' ">
+		    	u.email=#{email},
+			</if>
+			<if test="status != null  ">
+		    	u.status=#{status},
+			</if>
+			<if test="createUserId != null  ">
+		    	u.createUserId=#{createUserId},
+			</if> 
+			<if test="createDatetime != null  ">
+		    	u.createDatetime=#{createDatetime},
+			</if>
+			<if test="lastUpdatedUserId != null  ">
+		    	u.lastUpdatedUserId=#{lastUpdatedUserId},
+			</if>
+			<if test="lastUpdatedDatetime != null  ">
+		    	u.lastUpdatedDatetime=#{lastUpdatedDatetime}
+			</if> 
+			<if test="lastLoginTime != null  ">
+		    	u.lastLoginTime=#{lastLoginTime}
+			</if> 
+		</set>
+		where u.id=#{id}    
+	</update>
+	
+	<select id="findCustomerUserById" parameterType="java.lang.Long" resultType="com.xinding.travel.pojo.CustomerUser">
+	    select * from t_why_customer_user u where u.id = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.CustomerAccountMapper">
+	<!-- 根据活动代码和签到码查询 -->
+	<select id="selectCustomerAccount" parameterType="java.util.Map" resultType="com.xinding.travel.pojo.CustomerAccount">
+		select * from t_why_customer_account where account=#{account} and customerid=#{customerid} order by id
+	</select>
+	
+	<select id="findCustomerAccount" parameterType="java.util.Map" resultType="com.xinding.travel.pojo.CustomerAccount">
+	    select * from t_why_customer_account where account=#{account} and customerid=#{customerid}
+	</select>
+	
+	<insert id="AddcustomerAccount" parameterType="com.xinding.travel.pojo.WhyCustomerUserRole">
+	    insert into t_why_customer_account 
+			   (account, 
+			    password, 
+			    status, 
+			    customerId,
+			    createUserId, 
+			    createDatetime, 
+			    lastUpdatedUserId, 
+			    lastUpdatedDatetime)
+	    values (#{account},
+	            #{password},
+	            #{status},
+	            #{customerId},
+	            #{createUserId},
+	            #{createDatetime},
+	            #{lastUpdatedUserId},
+	            #{lastUpdatedDatetime})	
+	</insert>
+	
+	<update id="updateCustomerAccount" parameterType="com.xinding.travel.pojo.CustomerAccount">
+	    update t_why_customer_account a set a.account=#{account},
+	    									a.status=#{status},
+	                                        a.password=#{password},
+	                                        a.customerId=#{customerId},
+	                                        a.createUserId=#{createUserId},
+	                                        a.createDatetime=#{createDatetime},
+	                                        a.lastUpdatedUserId=#{lastUpdatedUserId},
+	                                        a.lastUpdatedDatetime=#{lastUpdatedDatetime}
+	     where a.id = #{id}                                  
+	                                        
+	</update>
+	
+	
+</mapper>
+

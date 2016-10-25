@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.PDAUserModelMapper">
+	<select id="PDAUserByAccount" parameterType="java.lang.String" resultType="com.xinding.travel.pojo.PDAUser">
+	    select * from t_pda_user u where u.account = #{account}
+	    <!-- <where>
+		   <if test="account != null and account != '' ">
+		    	<![CDATA[and a.tag_id = #{type}]]>
+		   </if>
+		   <if test="active != null and active != '' ">
+		    	<![CDATA[and a.active = #{active}]]>
+		   </if>
+	  	</where> -->
+	    
+	</select>
+	<select id="PDAUserById" parameterType="java.lang.Long" resultType="com.xinding.travel.pojo.PDAUser">
+	    select * from t_pda_user u where u.id = #{id}
+	</select>
+	<update id="updateToken" parameterType="java.lang.String">
+	    update t_pda_user u set u.token = #{0} 
+	    where u.account = #{1} and u.`password` = #{2}
+	</update>
+	<select id="deviceList" resultType="java.lang.Integer">
+	    select count(1) from t_pda_device d where d.status = '2' and d.deviceNo = #{deviceNo}
+	</select>
+	<select id="invalidDeviceList" resultType="java.lang.Integer">
+	    select count(1) from t_pda_device d where d.status = '0' and d.deviceNo = #{deviceNo}
+	</select>
+	<insert id="insertDevice" parameterType="com.xinding.travel.pojo.PDADevice" >
+	    insert into t_pda_device 
+			   (deviceNo, 
+			    status, 
+			    createDatetime, 
+			    lastUpdatedDatetime, 
+			    deviceType, 
+			    systemVersion)
+	    values (#{deviceNo},
+	            #{status},
+	            #{createDatetime},
+	            #{lastUpdatedDatetime},
+	            #{deviceType},
+	            #{systemVersion})	
+	</insert>
+	<select id="pdaUserDetail" parameterType="java.lang.Long" resultType="Map">
+	    select u.firstPic, u.employeeNo, u.`name` as pdaname , o.`name` as storename
+		from t_pda_scenic_order uo
+		LEFT JOIN t_pda_user u ON uo.pdaUserId = u.id
+		LEFT JOIN t_why_scenic_project o ON uo.scenicId = o.id
+		where u.id = #{id} and o.status = 1
+	</select>
+</mapper>

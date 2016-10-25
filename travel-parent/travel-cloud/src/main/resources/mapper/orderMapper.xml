@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.OrderMapper">
+	<!-- 根据活动代码和签到码查询 -->
+	<select id="listByCode" parameterType="String" resultType="com.xinding.travel.pojo.Order">
+		select * from t_why_order where code = #{code}
+	</select>
+	<select id="getPayOrder" parameterType="String" resultType="com.xinding.travel.pojo.Order">
+		select * from t_why_order where orderSn = #{orderSn}
+	</select>
+	<select id="orderList"  parameterType="Map" resultType="com.xinding.travel.pojo.Order">
+		select o.*, p.payName,s.name,u.name as pdaUserName, d.*  from t_why_order o 
+		LEFT JOIN t_why_scenic_project s on o.scenicProjectId = s.id
+		LEFT JOIN t_why_delivery d ON o.deliveryId = d.id
+		LEFT JOIN t_why_pay_way p ON o.payWayId = p.id
+		LEFT JOIN t_pda_user u on o.pdaUserId = u.id
+		where o.status  <![CDATA[<>]]> 0 
+		<if test="key != null and key != '' ">
+		    <![CDATA[and (o.orderSn like CONCAT('%',#{key},'%' )
+		    or s.name  like CONCAT('%',#{key},'%' )
+		    or o.mobilePhone   like CONCAT('%',#{key},'%' ))
+		    ]]>
+		</if>
+		<if test="orderSn != null and orderSn != '' ">
+		    <![CDATA[and o.orderSn like CONCAT('%',#{orderSn},'%' )]]>
+		</if>
+		<if test="name != null and name != '' ">
+		    <![CDATA[and s.name like CONCAT('%',#{name},'%' )]]>
+		</if>
+		<if test="mobilePhone != null and mobilePhone != '' ">
+		    <![CDATA[and o.mobilePhone like CONCAT('%',#{mobilePhone},'%' )]]>
+		</if>
+		<if test="payId != null and payId != '' ">
+		    <![CDATA[and p.id = #{payId}]]>
+		</if>
+		<if test="status != null and status != '' ">
+		    <![CDATA[and o.status = #{status}]]>
+		</if>
+		<if test="startDatetime != null and startDatetime != '' ">
+		    <![CDATA[and o.createTime >= #{startDatetime}]]>
+		</if>
+		<if test="endDatetime != null and endDatetime != '' ">
+		    <![CDATA[and o.createTime <= #{endDatetime}]]>
+		</if>
+		<if test="pdaUserName != null and pdaUserName != '' ">
+		    <![CDATA[and u.name like CONCAT('%',#{pdaUserName},'%' )]]>
+		</if>
+		<if test="customerId != null and customerId != '' ">
+		    <![CDATA[and s.customerId = #{customerId}]]>
+		</if>
+		order by o.id desc
+	</select>
+	
+	
+	<select id="amountMoney" parameterType="Map" resultType="Double">
+		select SUM(o.orderAmount) amountMoney  from t_why_order o 
+		LEFT JOIN t_why_scenic_project s on o.scenicProjectId = s.id
+		LEFT JOIN t_why_delivery d ON o.deliveryId = d.id
+		LEFT JOIN t_why_pay_way p ON o.payWayId = p.id
+		LEFT JOIN t_pda_user u on o.pdaUserId = u.id
+		where o.status  <![CDATA[<>]]> 0 
+		<if test="key != null and key != '' ">
+		    <![CDATA[and (o.orderSn like CONCAT('%',#{key},'%' )
+		    or s.name  like CONCAT('%',#{key},'%' )
+		    or o.mobilePhone   like CONCAT('%',#{key},'%' ))
+		    ]]>
+		</if>
+		<if test="orderSn != null and orderSn != '' ">
+		    <![CDATA[and o.orderSn like CONCAT('%',#{orderSn},'%' )]]>
+		</if>
+		<if test="name != null and name != '' ">
+		    <![CDATA[and s.name like CONCAT('%',#{name},'%' )]]>
+		</if>
+		<if test="mobilePhone != null and mobilePhone != '' ">
+		    <![CDATA[and o.mobilePhone like CONCAT('%',#{mobilePhone},'%' )]]>
+		</if>
+		<if test="payId != null and payId != '' ">
+		    <![CDATA[and p.id = #{payId}]]>
+		</if>
+		<if test="status != null and status != '' ">
+		    <![CDATA[and o.status = #{status}]]>
+		</if>
+		<if test="startDatetime != null and startDatetime != '' ">
+		    <![CDATA[and o.createTime >= #{startDatetime}]]>
+		</if>
+		<if test="endDatetime != null and endDatetime != '' ">
+		    <![CDATA[and o.createTime <= #{endDatetime}]]>
+		</if>
+		<if test="pdaUserName != null and pdaUserName != '' ">
+		    <![CDATA[and u.name like CONCAT('%',#{pdaUserName},'%' )]]>
+		</if>
+		<if test="customerId != null and customerId != '' ">
+		    <![CDATA[and s.customerId = #{customerId}]]>
+		</if>
+		order by o.id desc
+	</select>
+</mapper>

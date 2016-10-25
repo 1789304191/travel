@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.OrderMobileMapper">
+    
+  <!-- <resultMap type="" id="orderScenic">
+    <id column="orderSn" property="orderSn" />
+    <result column="num" property="num" />
+    <result column="createTime" property="createTime" />
+    <result column="status" property="status" />
+    <result column="name" property="name" />
+  </resultMap> -->
+  
+	<select id="isExistVeri" parameterType="java.lang.String" resultType="com.xinding.travel.pojo.OrderMobile">
+	    select a.orderSn, a.num, a.createTime, a.status, sp.`name` from t_why_order a
+		LEFT JOIN t_why_scenic_project sp ON a.scenicProjectId = sp.id
+		where a.verificateNo = #{verificateNo}
+	</select>
+	
+	<select id="isRepeatedVeri" parameterType="java.lang.String" resultType="java.lang.Integer">
+	    select count(1) from t_why_order a where a.verificateNo = #{verificateNo} and a.`status` = '2'
+	</select>
+	
+	<select id="getCreateTime" parameterType="java.lang.String" resultType="java.sql.Timestamp">
+	    select a.createTime from t_why_order a where a.verificateNo = #{verificateNo} and a.`status` = '1'
+	</select>
+	
+	<update id="updateVeriStatus" >
+	    update t_why_order o set o.status = '2',o.scannTime = #{1} where o.verificateNo = #{0}
+	</update>
+	
+	<select id="orderVerList" parameterType="java.lang.Integer" resultType="com.xinding.travel.pojo.OrderMobile">
+	    select a.orderSn, a.num, a.createTime, a.status, sp.`name`, sp.price, u.account, a.verificateNo from t_why_order a
+		LEFT JOIN t_why_scenic_project sp ON a.scenicProjectId = sp.id
+		LEFT JOIN t_pda_user u ON a.pdaUserId = u.id
+		where a.`status` = #{status} and TO_DAYS(a.createTime) = TO_DAYS(NOW())
+	</select>
+	
+	<update id="insertPDAUserId" >
+	    update t_why_order o set o.pdaUserId = #{0} where o.verificateNo = #{1}
+	</update>
+	
+	<select id="orderVerDetail" parameterType="java.lang.String" resultType="com.xinding.travel.pojo.OrderMobile">
+	    select a.orderSn, a.num, a.createTime, a.status, sp.`name`, sp.price, u.account, a.scannTime, a.mobilePhone, a.status, u.name as pdaname from t_why_order a
+		LEFT JOIN t_why_scenic_project sp ON a.scenicProjectId = sp.id
+		LEFT JOIN t_pda_user u ON a.pdaUserId = u.id
+		where a.verificateNo = #{verificateNo}
+	</select>
+	
+	<select id="orderDetail" parameterType="java.lang.String" resultType="com.xinding.travel.pojo.OrderMobile">
+	    select a.*, b.name from t_why_order a 
+	    left join t_why_scenic_project b on a.scenicProjectId = b.id
+	    where a.orderSn = #{orderSn}
+	</select>
+	
+	<select id="list" parameterType="Map" resultType="com.xinding.travel.pojo.OrderMobile">
+	    select a.*, b.name,b.description from t_why_order a 
+	    left join t_why_scenic_project b on a.scenicProjectId = b.id
+	    where a.status <![CDATA[<>]]> 0 
+	    and a.projectCode = #{projectCode}
+	    and a.mobilePhone = #{mobilePhone}
+	</select>
+	
+	<select id="getMobilePhone" parameterType="Map" resultType="com.xinding.travel.pojo.OrderMobile">
+	    select a.*  from t_why_order a 
+	    where a.status <![CDATA[<>]]> 0 
+	    and a.projectCode = #{projectCode}
+	    and a.openId = #{openId}
+	</select>
+	
+</mapper>

@@ -1,0 +1,132 @@
+<div class="portlet-body" >
+    <div  class="super-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>项目名称</label>
+                    <div class="controls">
+                        <input type="text" name="projectName" ng-model="query.name" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>开始时间</label>
+                    <div class="controls">
+                        <input id="queryStime" name="stime" ng-model="query.stime" class="form-control Wdate" wdate-picker  date-Fmt="HH:mm" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>结束时间</label>
+                    <div class="controls">
+                        <input id="queryEtime" name="etime" ng-model="query.etime" class="form-control Wdate" wdate-picker  date-Fmt="HH:mm" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>是否发布</label>
+                    <div class="controls">
+                    	<select  ng-model="query.status" ng-options="key as value for (key, value) in states" class="form-control">
+                    		<option value="">请选择</option>
+						</select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+         	<div class="col-md-4">
+                <div class="form-group superior-add">
+                     <button class="btn btn-info" type="button" ng-click="add()">新增</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group no-superior-commit">
+                    <button class="btn btn-info superior-btn" type="button" ng-click="superior(project)">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<table
+		class="table table-hover table-striped table-bordered  table-angular">
+		<thead>
+			<tr>
+				<th class="active" ng-click="tableSort('one')">ID</th>
+				<th class="active" ng-click="tableSort('two')">项目名称</th>
+				<th class="active" ng-click="tableSort('three')">价格</th>
+				<th class="active" ng-click="tableSort('three')">开始时间</th>
+				<th class="active" ng-click="tableSort('Name')">结束时间</th>
+				<th class="active" ng-click="tableSort('Name')">驻户ID</th>
+				<!-- <th class="active" ng-click="tableSort('City')">描述</th> -->
+				<th class="active" ng-click="tableSort('County')">状态</th>
+				<th>修改</th>
+				<th>删除</th>
+				<th>是否发布</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="project in dataTable.data">
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.id"></td>
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.name"></td>
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.price"></td>
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.startDatetime"></td>
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.endDatetime"></td>
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.customerId"></td>
+				<!-- <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.description"></td> -->
+				<td><input ng-readonly="project.readControl"
+					ng-class="{ 'not-edit': project.readControl}"
+					class="form-control read-control" ng-model="project.status"></td>
+				<td>
+					<button ng-show="project.readControl" type="button"
+						class="btn btn-info btn-sm " ng-click="tableEdit($index)">修改
+					</button>
+					<div ng-show="!project.readControl">
+						<button type="button" class="btn btn-success btn-sm "
+							ng-click="tableSave(project,$index)">保存</button>
+						<button type="button" class="btn btn-default btn-sm "
+							ng-click="tableCancel($index)">取消</button>
+					</div>
+
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary btn-sm "
+						ng-click="tableDelete(project.id)">删除</button>
+				</td>
+				<td>
+					<div class="form-group">
+						<div class="col-sm-10">
+							<label class="switch switch-sm"> <input type="checkbox" ng-model="project.check"
+								 ng-click="publish(project.id,project.check)" /> <span></span>
+							</label>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>显示第 {{currentPageStart()}} 条至 {{currentPageEnd()}} 条</p>
+	<div class="text-right">
+		<uib-pagination total-items="dataTable.totalLength"
+			ng-model="dataTable.currentPage" max-size="5" class="pagination"
+			boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+	</div>
+</div>

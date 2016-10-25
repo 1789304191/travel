@@ -1,0 +1,43 @@
+<div ng-controller="pdauser-update-Ctrl" >
+	<form name="pdauserForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label for="account" class="col-sm-3 control-label">账户名称</label>
+			<div class="col-sm-8">
+				<input id="account" type="text" name="account" ng-model="pdadevice.account"
+					class="form-control"  required> <span
+					ng-show="pdauserForm.account.$dirty && pdauserForm.account.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">真实姓名</label>
+			<div class="col-sm-8">
+				<input id="name" type="text" name="name" ng-model="pdadevice.name"
+					class="form-control"  required> <span
+					ng-show="pdauserForm.account.$dirty && pdauserForm.account.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="password" class="col-sm-3 control-label">密码</label>
+			<div class="col-sm-8">
+				<input id="password" type="password" name="password" ng-model="pdadevice.password"
+					class="form-control"  required> <span
+					ng-show="pdauserForm.password.$dirty && pdauserForm.password.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-8">
+				<button class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+				<button type="submit" class="btn btn-success btn-lg"
+					ng-click="confirm(userAdmin)">提交</button>
+			</div>
+		</div>
+		
+		
+	</form>
+</div>

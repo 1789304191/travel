@@ -1,0 +1,65 @@
+<div ng-controller="scenic_project_update_dialogFormCtrl" >
+	<form name="scenicProjectForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label for="name" class="col-sm-3 control-label">项目名称</label>
+			<div class="col-sm-8">
+				<input id="name" type="text" name="name" ng-model="scenicProject.name"
+					class="form-control"  required> <span
+					ng-show="scenicProjectForm.name.$dirty && scenicProjectForm.name.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="firstPic" class="col-sm-3 control-label">图片</label>
+			<div class="col-sm-8">
+				<img ng-src="{{firstPic}}" class="dash" pic-upload="spot" />
+				<input type="hidden" name="firstPic" id="firstPic" ng-model="scenicProject.firstPic" class="form-control"  required />
+				<span ng-show="scenicProjectForm.firstPic.$dirty && scenicProjectForm.firstPic.$error.required"
+					class="text-danger">必填项</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="description" class="col-sm-3 control-label">描述</label>
+			<div class="col-sm-8">
+				<textarea id="description" name="description" ng-model="scenicProject.description" class="form-control" ckeditor="spot" required></textarea>
+				<span
+					ng-show="scenicProjectForm.description.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="startDatetime" class="col-sm-3 control-label">开始时间</label>
+			<div class="col-sm-8">
+				<input id="startDatetime" type="text" name="startDatetime" ng-model="scenicProject.startDatetime"
+					class="form-control Wdate"  wdate-picker date-Fmt="HH:mm"  required> 
+					<span ng-show="scenicProjectForm.startDatetime.$dirty && scenicProjectForm.startDatetime.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="endDatetime" class="col-sm-3 control-label">结束时间</label>
+			<div class="col-sm-8">
+				<input id="endDatetime" type="text" name="endDatetime" ng-model="scenicProject.endDatetime"
+					class="form-control Wdate" wdate-picker date-Fmt="HH:mm"  required> <span
+					ng-show="scenicProjectForm.endDatetime.$dirty && scenicProjectForm.endDatetime.$error.required"
+					class="text-danger">必填项</span> 
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="price" class="col-sm-3 control-label">价格</label>
+			<div class="col-sm-8">
+				<input id="price" type="number" name="price" ng-model="scenicProject.price"
+					class="form-control"  required> 
+					<span ng-show="scenicProjectForm.price.$dirty && scenicProjectForm.price.$error.required" class="text-danger">必填项</span> 
+					<span ng-show="scenicProjectForm.price.$error.number" class="text-danger">必须是数字</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-8">
+				<button class="btn btn-default btn-lg" ng-click="closeThisDialog(0)">取消</button>
+				<button type="submit" class="btn btn-success btn-lg"
+					ng-click="confirm(userAdmin)">提交</button>
+			</div>
+		</div>
+	</form>
+</div>

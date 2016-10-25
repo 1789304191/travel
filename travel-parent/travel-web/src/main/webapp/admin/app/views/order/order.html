@@ -1,0 +1,155 @@
+<div class="portlet-body">
+	<div class="input-group"
+		style="margin-bottom: 10px; width: 40%; float: right">
+		<input type="text" class="form-control"
+			placeholder="请输入订单编号/景点项目名称/手机号" ng-model="query.key"
+			ng-change="searchChange()"> <span class="input-group-btn">
+			<button class="btn btn-info search-btn" type="button"
+				ng-click="searchFuc()">搜索</button>
+		</span> <span class="input-group-btn search-btn">
+			<button class="btn btn-info superior-btn" type="button"
+				superior-dire="isSuperior">高级搜索</button>
+		</span>
+	</div>
+	<div id="isSuperior" class="superior-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>订单编号</label>
+					<div class="controls">
+						<input type="text" ng-model="query.orderSn" class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>景点项目名称</label>
+					<div class="controls">
+						<input type="text" ng-model="query.name" class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>手机号</label>
+					<div class="controls">
+						<input type="text" ng-model="query.mobilePhone"
+							class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>支付方式</label>
+						<div class="controls">
+						<select ng-model="query.payId"
+							ng-options="item.id as item.name for item in selectPayIdItems"
+							class="input-control" ng-selected="item.id==query.payId">
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-5">
+							<label for="startDatetime">开始时间</label> 
+							<input id="startDatetime"
+								type="text" name="startDatetime" ng-model="query.startDatetime"
+								class="input-control time-input-style Wdate"
+								wdate-picker max-Time="endDatetime" date-Fmt="yyyy-MM-dd" ng-keyup="myKeyup($event)">
+						</div>
+						<div class="col-xs-1">
+						<label></label>
+						<div class="bolang-x">~</div>
+						</div>
+						<div class="col-xs-5">
+							<label for="endDatetime">结束时间</label> 
+							<input id="endDatetime"
+								type="text" name="endDatetime" ng-model="query.endDatetime"
+								class="input-control time-input-style Wdate"
+								wdate-picker min-Time="startDatetime" date-Fmt="yyyy-MM-dd" ng-keyup="myKeyup($event)">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>状态</label>
+					<div class="controls">
+						<select ng-model="query.status"
+							ng-options="item.id as item.name for item in selectItems"
+							class="input-control" ng-selected="item.id==query.status" ng-keyup="myKeyup($event)">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>核销人</label>
+					<div class="controls">
+						<input type="text" ng-model="query.pdaUserName" class="input-control" ng-keyup="myKeyup($event)"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group superior-commit">
+					<button class="btn btn-info superior-btn" type="button" ng-click="superiorSearch()">高级搜索</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="input-group"
+		style="margin-bottom: 10px; width: 30%; float: left"></div>
+	<div class="table table-responsive table-angular">
+		<table class="table table-hover table-bordered table-odd">
+			<thead>
+				<tr>
+					<th class="active">序号</th>
+					<th class="active" ng-click="tableSort('one')">订单编号</th>
+					<th class="active" ng-click="tableSort('two')">景点项目名称</th>
+					<th class="active" ng-click="tableSort('three')">手机号</th>
+					<th class="active" ng-click="tableSort('Name')">数量</th>
+					<th class="active" ng-click="tableSort('City')">单价</th>
+					<th class="active" ng-click="tableSort('City')">总金额</th>
+					<th class="active" ng-click="tableSort('City')">支付方式</th>
+					<th class="active" ng-click="tableSort('County')">核销码</th>
+					<th class="active" ng-click="tableSort('County')">下单时间</th>
+					<th class="active" ng-click="tableSort('Status')">状态</th>
+					<th class="active" ng-click="tableSort('pdaUserName')">核销人</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="project in dataTable.data">
+				    <td>{{serialNumber($index+1)}}</td>
+					<td>{{project.orderSn}}</td>
+					<td>{{project.name}}</td>
+					<td>{{project.mobilePhone}}</td>
+					<td>{{project.num}}</td>
+					<td>{{project.price}}</td>
+					<td>{{project.orderAmount}}</td>
+					<td>{{project.payName}}</td>
+					<td>{{project.verificateNo}}</td>
+					<td>{{project.createTime}}</td>
+					<td>{{project.status}}</td>
+					<td>{{project.pdaUserName}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<p>第 <span style="color:#FF0000">{{currentPageStart()}}</span> 条至 <span style="color:#FF0000">{{currentPageEnd()}}</span> 条
+		|总共：<span style="color:#FF0000">{{totalNum()}}</span> 条|订单总额：<span style="color:#FF0000">{{amountMoney()}}</span> 元</p>
+	<div class="text-right">
+		<uib-pagination total-items="dataTable.totalLength"
+			ng-model="dataTable.currentPage" max-size="5" class="pagination"
+			boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+	</div>
+</div>

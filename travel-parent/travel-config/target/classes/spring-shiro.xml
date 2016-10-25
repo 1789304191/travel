@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/task
+    					http://www.springframework.org/schema/task/spring-task-3.2.xsd
+							http://www.springframework.org/schema/beans    
+                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+                            http://www.springframework.org/schema/context    
+                            http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+                            http://www.springframework.org/schema/mvc    
+                            http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+                            http://www.springframework.org/schema/util 
+                            http://www.springframework.org/schema/util/spring-util-2.5.xsd ">
+
+	<description>Shiro Configuration</description>
+      
+    <!-- Shiro 配置 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	    <property name="sessionMode" value="native"></property>
+	    <property name="sessionManager" ref="sessionManager"/>
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="realm" ref="shiroDbRealm" />
+	</bean>
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionDAO">
+			<bean class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO"/>
+		</property>
+		<property name="sessionValidationScheduler">
+			<bean class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler"/>
+		</property>
+		<property name="sessionIdCookie">
+			<bean class="org.apache.shiro.web.servlet.SimpleCookie">
+				<property name="name" value="WSESSIONID"/>
+			</bean>
+		</property>
+		<property name="globalSessionTimeout" value="1800000"/>
+	    <property name="sessionValidationSchedulerEnabled" value="true"/>
+		<property name="deleteInvalidSessions" value="true"/>
+	</bean>
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+    
+	<bean id="shiroDbRealm" class="com.xinding.travel.security.ShiroDbRealm" />
+	<bean id="captchaFormAuthenticationFilter" class="com.xinding.travel.security.CaptchaFormAuthenticationFilter" />
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login" />
+		<property name="successUrl" value="/main" />
+		<property name="unauthorizedUrl" value="/login" />
+		<property name="filters">
+            <util:map>
+                <entry key="authc" value-ref="captchaFormAuthenticationFilter"/>
+            </util:map>
+        </property>
+		<property name="filterChainDefinitions">
+			<value>
+                # everything else requires authentication:
+                #/** = authc
+                /index/signout=logout
+                /** = anon
+			</value>
+		</property>
+	</bean>
+    
+</beans>

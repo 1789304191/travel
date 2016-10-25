@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>com.xinding.travel</groupId>
+		<artifactId>travel-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>travel-config</artifactId>
+	<name>travel-config</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
+				<excludes>
+					<exclude>dev/*</exclude>
+					<exclude>prd/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/${profiles.active}</directory>
+			</resource>
+		</resources>
+	</build>
+	<profiles>
+		<profile>
+			<!-- 本地开发环境 -->
+			<id>dev</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<!-- 生产环境 -->
+			<id>prd</id>
+			<properties>
+				<profiles.active>prd</profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<!-- 测试环境 -->
+			<id>test</id>
+			<properties>
+				<profiles.active>test</profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.xinding.travel</groupId>
+			<artifactId>travel-base</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<!-- 表示开发的时候引入，发布的时候不会加载此包 -->
+			<scope>test</scope>
+		</dependency>
+		<!-- 导入java ee jar 包 -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<scope>provided</scope>
+			<version>7.0</version>
+		</dependency>
+	</dependencies>
+</project>

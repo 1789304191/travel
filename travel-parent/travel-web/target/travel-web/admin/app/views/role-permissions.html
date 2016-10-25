@@ -1,0 +1,65 @@
+<div class="portlet-body"> 
+    <div class="input-group" style="margin-bottom: 10px;width: 40%;float: right">
+        <input type="text" class="form-control" placeholder="名称..." ng-model="search.condition"
+               ng-change="searchChange()">
+        <span class="input-group-btn">
+              <button class="btn btn-info" type="button" ng-click="searchCommit()">搜索</button>
+        </span>
+    </div>
+    <div class="input-group" style="margin-bottom: 10px;width: 40%;float: left">
+               <span class="input-group-btn">
+                  <button class="btn btn-info" type="button" ng-click="add()">新增</button>
+               </span>
+    </div>
+    <table class="table table-hover table-striped table-bordered  table-angular">
+        <thead>
+        <tr>
+        	<th class="active" ng-click="tableSort('one')">id</th>
+            <th class="active" ng-click="tableSort('one')">pId</th>
+            <th class="active" ng-click="tableSort('two')">名称</th>
+            <th class="active" ng-click="tableSort('three')">权限代码</th>
+            <th class="active" ng-click="tableSort('four')">图标</th>
+            <!-- <th class="active" ng-click="tableSort('Name')">创建人</th> -->
+            <!-- <th class="active" ng-click="tableSort('City')">更新时间</th> -->
+            <th>修改</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in dataTable.data">
+       		<td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.id"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.pId"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.text"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control"  ng-model="project.sref"></td>
+            <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control" ng-model="project.icon"></td>
+           <!--  <td><input ng-readonly="project.readControl" ng-class="{ 'not-edit': project.readControl}"
+                       class="form-control read-control"  ></td> -->
+            <td>
+                <button ng-show="project.readControl" type="button" class="btn btn-info btn-sm "
+                        ng-click="tableEdit($index)">修改
+                </button>
+                <!-- <div ng-show="!project.readControl">
+                    <button type="button" class="btn btn-success btn-sm " ng-click="tableSave(project,$index)">保存
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm " ng-click="tableCancel($index)">取消
+                    </button>
+                </div> -->
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm " ng-click="tableDelete(project.id)">删除
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p>显示第 {{currentPageStart()}} 条至 {{currentPageEnd()}} 条</p>
+    <div class="text-right">
+        <uib-pagination  total-items="dataTable.totalLength" ng-model="dataTable.currentPage" max-size="5" class="pagination"
+                        boundary-links="true" force-ellipses="true" ng-change="pageChanged()"></uib-pagination>
+    </div>
+</div>

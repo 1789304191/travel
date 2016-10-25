@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.WhyPrivilegeMapper">
+	<select id="privilegeList"  resultType="Map">
+		select id,pId,text as name from t_why_menu where status=2
+	</select>
+	
+	<!-- 查出父菜单 -->
+	<select id="privilegesParent" parameterType="Map" resultType="Map" >
+		select * from t_why_menu
+		<where>
+		    pId=0 and status=2 
+		   <if test="id != null and id != '' ">
+		    	and id in
+		    	 <foreach item="item" index="index" collection="id" open="(" separator="," close=")">  
+ 				 #{item}
+ 				 </foreach>  
+		   </if>
+	  	</where>
+	</select>
+	
+	<!-- 查出父菜单对应的菜单 -->
+	<select id="privilegesChildren" parameterType="Map" resultType="Map" >
+		select * from t_why_menu
+		<where>
+		  pId=#{id} and status=2
+	  	</where>
+	</select>
+	
+	<!-- 查出第三级菜单增删改 -->
+	<select id="privilegesThird" parameterType="Map" resultType="com.xinding.travel.pojo.WhyPrivilege" >
+		select * from t_why_menu
+		<where>
+		   status=2 
+		   <if test="id != null and id != '' ">
+		    	and id in
+		    	 <foreach item="item" index="index" collection="id" open="(" separator="," close=")">  
+ 				 #{item}
+ 				 </foreach>  
+		   </if>
+	  	</where>
+	</select>
+	
+	<!-- 查出所有权限 -->
+	<select id="privilegesAll"  resultType="Map" >
+		select * from t_why_menu where status=2 
+	</select>
+	
+</mapper>

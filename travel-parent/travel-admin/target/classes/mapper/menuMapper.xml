@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="com.xinding.travel.mapper.MenuMapper">
+	<select id="menuList" parameterType="Map" resultType="Map">
+		select * from t_why_menu 
+		<where>
+		    status=2
+		    <if test="text != null and text!='' ">
+		    	and text like CONCAT('%','${text}','%' )
+			</if>
+		</where> 
+		
+	</select>
+	
+	<update id="menuUpdate" parameterType="com.xinding.travel.pojo.Menu" >
+	    update t_why_menu set text=#{text},sref=#{sref},icon=#{icon} where id=#{id} 
+	</update>
+	
+	<insert id="menuAdd" parameterType="com.xinding.travel.pojo.Menu">
+	    insert into t_why_menu (pId,text,sref,icon) values (#{pId},#{text},#{sref},#{icon})
+	</insert>
+	
+	<update id="menuDelete" parameterType="Map" >
+	    update t_why_menu set status=0 where id=#{id} 
+	</update>
+</mapper>
