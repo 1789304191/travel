@@ -12,6 +12,7 @@
     <module>travel-cloud</module>
     <module>travel-admin</module>
     <module>travel-pay</module>
-    <module>travel-interface</module>
+    <!--<module>travel-interface</module>-->
   </modules>
+  
 </project>
