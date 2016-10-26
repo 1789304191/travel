@@ -29,8 +29,8 @@ public class TestController{
 	@RequestMapping(value="/set", method= RequestMethod.GET)
     @ResponseBody
     public void set() {
-		redisService.set("enable_store","5");
-		testService.updateStore1("2");
+//		redisService.set("enable_store","5");
+//		testService.updateStore1("2");
 		
 //		System.out.println(Integer.valueOf(null));
 //		testService.updateStore("0");
