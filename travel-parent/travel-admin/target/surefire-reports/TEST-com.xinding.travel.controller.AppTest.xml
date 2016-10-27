@@ -16,12 +16,12 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="F:\data\travel-parent"/>
+    <property name="user.dir" value="F:\data\travel\travel-parent"/>
     <property name="java.runtime.version" value="1.7.0_17-b02"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="F:\data\jdk1.7.0_17\jre\lib\endorsed"/>
     <property name="os.arch" value="amd64"/>
-    <property name="idea.modules.paths.file" value="C:\Users\Maggie\.IdeaIC2016.2\system\Maven\idea-projects-state-85212a33.properties"/>
+    <property name="idea.modules.paths.file" value="C:\Users\Maggie\.IdeaIC2016.2\system\Maven\idea-projects-state-ecea6945.properties"/>
     <property name="java.io.tmpdir" value="C:\Users\Maggie\AppData\Local\Temp\"/>
     <property name="line.separator" value="
 "/>
