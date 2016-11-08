@@ -43,6 +43,7 @@ public class CustomerController extends BaseController {
     @SuppressWarnings("all")
     public List<Map> findCustomerNameList() {
 		try {
+			System.out.println("liguoxiong");
 			return customerService.findCustomerNameList();
     	} catch (Exception e) {
 			e.printStackTrace();
